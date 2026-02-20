@@ -1,0 +1,2074 @@
+bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "masterid",
+            "description": "id of ContractMaturity entity",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "Contract",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Contract"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contract/find": {
+      "get": {
+        "description": "Retrieves an entity of Contract type by its name",
+        "operationId": "contractFind",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "Contract",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Contract"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contract/getproductfeeparams": {
+      "post": {
+        "description": "### Query the a product's fee parameters.",
+        "operationId": "getProductFeeParams",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetProductFeeParams"
+              }
+            }
+          }
+        },
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "ProductFeeParamsResponse",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductFeeParamsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contract/item": {
+      "get": {
+        "description": "Retrieves an entity of Contract type by its id",
+        "operationId": "contractItem",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "Contract",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Contract"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contract/items": {
+      "get": {
+        "description": "Retrieves multiple entities of Contract type by its ids",
+        "operationId": "contractItems",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "Contract",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Contract"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contract/ldeps": {
+      "get": {
+        "description": "Retrieves all entities of Contract type related to multiple entities of ContractMaturity type",
+        "operationId": "contractLDependents",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "masterids",
+            "description": "ids of ContractMaturity entities",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "Contract",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Contract"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contract/rollcontract": {
+      "post": {
+        "description": "### Request the best upcoming maturity date for a given contract.",
+        "operationId": "rollContract",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RollContract"
+              }
+            }
+          }
+        },
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "RollContractResponse",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RollContractResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contract/rollcontracts": {
+      "post": {
+        "description": "",
+        "operationId": "rollContracts",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RollContracts"
+              }
+            }
+          }
+        },
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "RollContractsResponse",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RollContractsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contract/suggest": {
+      "get": {
+        "description": "Retrieves entities of Contract type filtered by an occurrence of a text in one of its fields",
+        "operationId": "contractSuggest",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "t",
+            "description": "Text",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "l",
+            "description": "Max number of entities",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "Contract",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Contract"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contractGroup/find": {
+      "get": {
+        "description": "Retrieves an entity of ContractGroup type by its name",
+        "operationId": "contractGroupFind",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "ContractGroup",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContractGroup"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contractGroup/item": {
+      "get": {
+        "description": "Retrieves an entity of ContractGroup type by its id",
+        "operationId": "contractGroupItem",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "ContractGroup",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContractGroup"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contractGroup/items": {
+      "get": {
+        "description": "Retrieves multiple entities of ContractGroup type by its ids",
+        "operationId": "contractGroupItems",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "ContractGroup",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ContractGroup"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contractGroup/list": {
+      "get": {
+        "description": "Retrieves all entities of ContractGroup type",
+        "operationId": "contractGroupList",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "ContractGroup",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ContractGroup"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contractGroup/suggest": {
+      "get": {
+        "description": "Retrieves entities of ContractGroup type filtered by an occurrence of a text in one of its fields",
+        "operationId": "contractGroupSuggest",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "t",
+            "description": "Text",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "l",
+            "description": "Max number of entities",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "ContractGroup",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ContractGroup"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contractMaturity/deps": {
+      "get": {
+        "description": "Retrieves all entities of ContractMaturity type related to Product entity",
+        "operationId": "contractMaturityDependents",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "masterid",
+            "description": "id of Product entity",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "ContractMaturity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ContractMaturity"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contractMaturity/item": {
+      "get": {
+        "description": "Retrieves an entity of ContractMaturity type by its id",
+        "operationId": "contractMaturityItem",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "ContractMaturity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContractMaturity"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contractMaturity/items": {
+      "get": {
+        "description": "Retrieves multiple entities of ContractMaturity type by its ids",
+        "operationId": "contractMaturityItems",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "ContractMaturity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ContractMaturity"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contractMaturity/ldeps": {
+      "get": {
+        "description": "Retrieves all entities of ContractMaturity type related to multiple entities of Product type",
+        "operationId": "contractMaturityLDependents",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "masterids",
+            "description": "ids of Product entities",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "ContractMaturity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ContractMaturity"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/currency/find": {
+      "get": {
+        "description": "Retrieves an entity of Currency type by its name",
+        "operationId": "currencyFind",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "Currency",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Currency"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/currency/item": {
+      "get": {
+        "description": "Retrieves an entity of Currency type by its id",
+        "operationId": "currencyItem",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "Currency",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Currency"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/currency/items": {
+      "get": {
+        "description": "Retrieves multiple entities of Currency type by its ids",
+        "operationId": "currencyItems",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "Currency",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Currency"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/currency/list": {
+      "get": {
+        "description": "Retrieves all entities of Currency type",
+        "operationId": "currencyList",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "Currency",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Currency"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/currency/suggest": {
+      "get": {
+        "description": "Retrieves entities of Currency type filtered by an occurrence of a text in one of its fields",
+        "operationId": "currencySuggest",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "t",
+            "description": "Text",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "l",
+            "description": "Max number of entities",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "Currency",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Currency"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/currencyRate/deps": {
+      "get": {
+        "description": "Retrieves all entities of CurrencyRate type related to Currency entity",
+        "operationId": "currencyRateDependents",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "masterid",
+            "description": "id of Currency entity",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "CurrencyRate",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CurrencyRate"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/currencyRate/item": {
+      "get": {
+        "description": "Retrieves an entity of CurrencyRate type by its id",
+        "operationId": "currencyRateItem",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "CurrencyRate",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrencyRate"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/currencyRate/items": {
+      "get": {
+        "description": "Retrieves multiple entities of CurrencyRate type by its ids",
+        "operationId": "currencyRateItems",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "CurrencyRate",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CurrencyRate"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/currencyRate/ldeps": {
+      "get": {
+        "description": "Retrieves all entities of CurrencyRate type related to multiple entities of Currency type",
+        "operationId": "currencyRateLDependents",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "masterids",
+            "description": "ids of Currency entities",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "CurrencyRate",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CurrencyRate"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/currencyRate/list": {
+      "get": {
+        "description": "Retrieves all entities of CurrencyRate type",
+        "operationId": "currencyRateList",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "CurrencyRate",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CurrencyRate"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/exchange/find": {
+      "get": {
+        "description": "Retrieves an entity of Exchange type by its name",
+        "operationId": "exchangeFind",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "Exchange",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Exchange"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/exchange/item": {
+      "get": {
+        "description": "Retrieves an entity of Exchange type by its id",
+        "operationId": "exchangeItem",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "Exchange",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Exchange"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/exchange/items": {
+      "get": {
+        "description": "Retrieves multiple entities of Exchange type by its ids",
+        "operationId": "exchangeItems",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "Exchange",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Exchange"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/exchange/list": {
+      "get": {
+        "description": "Retrieves all entities of Exchange type",
+        "operationId": "exchangeList",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "Exchange",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Exchange"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/exchange/suggest": {
+      "get": {
+        "description": "Retrieves entities of Exchange type filtered by an occurrence of a text in one of its fields",
+        "operationId": "exchangeSuggest",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "t",
+            "description": "Text",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "l",
+            "description": "Max number of entities",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "Exchange",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Exchange"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/product/deps": {
+      "get": {
+        "description": "Retrieves all entities of Product type related to Exchange entity",
+        "operationId": "productDependents",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "masterid",
+            "description": "id of Exchange entity",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "Product",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/product/find": {
+      "get": {
+        "description": "Retrieves an entity of Product type by its name",
+        "operationId": "productFind",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "Product",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/product/item": {
+      "get": {
+        "description": "Retrieves an entity of Product type by its id",
+        "operationId": "productItem",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "Product",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/product/items": {
+      "get": {
+        "description": "Retrieves multiple entities of Product type by its ids",
+        "operationId": "productItems",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "Product",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/product/ldeps": {
+      "get": {
+        "description": "Retrieves all entities of Product type related to multiple entities of Exchange type",
+        "operationId": "productLDependents",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "masterids",
+            "description": "ids of Exchange entities",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "Product",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/product/list": {
+      "get": {
+        "description": "Retrieves all entities of Product type",
+        "operationId": "productList",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "Product",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/product/suggest": {
+      "get": {
+        "description": "Retrieves entities of Product type filtered by an occurrence of a text in one of its fields",
+        "operationId": "productSuggest",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "t",
+            "description": "Text",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "l",
+            "description": "Max number of entities",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "Product",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/productSession/deps": {
+      "get": {
+        "description": "Retrieves all entities of ProductSession type related to Product entity",
+        "operationId": "productSessionDependents",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "masterid",
+            "description": "id of Product entity",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "ProductSession",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductSession"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/productSession/item": {
+      "get": {
+        "description": "Retrieves an entity of ProductSession type by its id",
+        "operationId": "productSessionItem",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "ProductSession",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductSession"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/productSession/items": {
+      "get": {
+        "description": "Retrieves multiple entities of ProductSession type by its ids",
+        "operationId": "productSessionItems",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "ProductSession",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductSession"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/productSession/ldeps": {
+      "get": {
+        "description": "Retrieves all entities of ProductSession type related to multiple entities of Product type",
+        "operationId": "productSessionLDependents",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "masterids",
+            "description": "ids of Product entities",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "ProductSession",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductSession"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/spreadDefinition/item": {
+      "get": {
+        "description": "Retrieves an entity of SpreadDefinition type by its id",
+        "operationId": "spreadDefinitionItem",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "SpreadDefinition",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SpreadDefinition"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/spreadDefinition/items": {
+      "get": {
+        "description": "Retrieves multiple entities of SpreadDefinition type by its ids",
+        "operationId": "spreadDefinitionItems",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          }
+        ],
+        "tags": [
+          "ContractLibrary"
+        ],
+        "responses": {
+          "200": {
+            "description": "SpreadDefinition",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SpreadDefinition"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/command/deps": {
+      "get": {
+        "description": "Retrieves all entities of Command type related to Order entity",
+        "operationId": "commandDependents",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "masterid",
+            "description": "id of Order entity",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "tags": [
+          "Orders"
+        ],
+        "responses": {
+          "200": {
+            "description": "Command",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Command"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/command/item": {
+      "get": {
+        "description": "Retrieves an entity of Command type by its id",
+        "operationId": "commandItem",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "tags": [
+          "Orders"
+        ],
+        "responses": {
+          "200": {
+            "description": "Command",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Command"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/command/items": {
+      "get": {
+        "description": "Retrieves multiple entities of Command type by its ids",
+        "operationId": "commandItems",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          }
+        ],
+        "tags": [
+          "Orders"
+        ],
+        "responses": {
+          "200": {
+            "description": "Command",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Command"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/command/ldeps": {
+      "get": {
+        "description": "Retrieves all entities of Command type related to multiple entities of Order type",
+        "operationId": "commandLDependents",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "masterids",
+            "description": "ids of Order entities",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          }
+        ],
+        "tags": [
+          "Orders"
+        ],
+        "responses": {
+          "200": {
+            "description": "Command",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Command"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/command/list": {
+      "get": {
+        "description": "Retrieves all entities of Command type",
+        "operationId": "commandList",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "tags": [
+          "Orders"
+        ],
+        "responses": {
+          "200": {
+            "description": "Command",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Command"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/commandReport/deps": {
+      "get": {
+        "description": "Retrieves all entities of CommandReport type related to Command entity",
+        "operationId": "commandReportDependents",
+        "security": [
+          {
+            "bearer_access_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "masterid",
+            "description": "id of Command entity",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "tags": [
+          "Orders"
+        ],
+        "responses": {
+          "200": 
