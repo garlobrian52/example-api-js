@@ -4,25 +4,48 @@ import { URLs } from '../../../tutorialsURLs'
 const { DEMO_URL, LIVE_URL } = URLs
 
 /**
- * Call to make GET requests to the Tradovate REST API. The passed `query` object will be reconstructed to a query string and placed in the query position of the URL.
- * ```js
- * //no parameters
- *  const jsonResponseA = await tvGet('/account/list')
+ * Make GET requests to the Tradovate REST API. The `query` object is serialized
+ * into a URL query string (`?key=value&...`) and appended to `endpoint`.
  *
- * //parameter object, URL will become '/contract/item?id=2287764'
- * const jsonResponseB = await tvGet('/contract/item', { id: 2287764 })
+ * **Authentication** – Every request requires a valid Bearer token obtained via
+ * `/auth/accesstokenrequest`. The token is read automatically from session
+ * storage; call `connect()` before using this function.
+ *
+ * **Common endpoint categories** (see the `trading` spec for the full list):
+ * - Contract Library: `/contract/item`, `/contract/find`, `/contract/suggest`,
+ *   `/contractGroup/list`, `/exchange/list`, `/product/list`, `/currency/list`
+ * - Orders: `/command/list`, `/command/item`, `/commandReport/deps`
+ *
+ * **Status codes**
+ * - `200` – Success; body contains the requested JSON payload.
+ * - `400` – Bad request (missing or invalid parameters).
+ * - `401` – Unauthorized; token is missing or expired — re-authenticate.
+ * - `404` – Entity not found.
+ *
+ * **Pagination** – List endpoints return arrays. Use the `masterid` (or `ids`)
+ * parameter to filter results; there is no cursor-based pagination.
+ *
+ * ```js
+ * // No query parameters
+ * const accounts = await tvGet('/account/list')
+ *
+ * // With query parameters — URL becomes '/contract/item?id=2287764'
+ * const contract = await tvGet('/contract/item', { id: 2287764 })
+ *
+ * // Target the live environment
+ * const liveAccounts = await tvGet('/account/list', null, 'live')
  * ```
- * 
- * New! You can interact with the browser devolopers' console. In the console enter commands:
+ *
+ * You can also call this function from the browser developer console:
  * ```
- * > tradovate.get('/account/list') //=> account data []
- * > tradovate.get('/contract/item', {id: 12345}) //=> maybe contract
+ * > tradovate.get('/account/list')          //=> account data []
+ * > tradovate.get('/contract/item', {id: 12345}) //=> Contract | undefined
  * ```
- * 
- * @param {string} endpoint 
- * @param {{[k:string]: any}} query object key-value-pairs will be converted into query, for ?masterid=1234 use `{masterid: 1234}`
- * @param {'demo' | 'live'} env 
- * @returns 
+ *
+ * @param {string} endpoint - API path, e.g. `'/contract/item'`
+ * @param {{[k:string]: any} | null} query - Key-value pairs serialized as query string; pass `null` for none
+ * @param {'demo' | 'live'} env - Target environment (default: `'demo'`)
+ * @returns {Promise<any>} Parsed JSON response body
  */
 export const tvGet = async (endpoint, query = null, env = 'demo') => {
     const { token } = getAccessToken()
@@ -66,25 +89,51 @@ export const tvGet = async (endpoint, query = null, env = 'demo') => {
 }
 
 /**
- * Use this function to make POST requests to the Tradovate REST API. `data` will be placed in the body of the request as JSON.
- * ```js
- * //placing an order with tvPost 
- * const jsonResponseC = await tvPost('/order/placeorder', {
- *   accountSpec: myAcct.name,
- *   accountId: myAcct.id,
- *   action: 'Buy',
- *   symbol: 'MNQM1',
- *   orderQty: 2,
- *   orderType: 'Market',
- *   isAutomated: true //was this order placed by you or your robot?
- * })
+ * Make POST requests to the Tradovate REST API. `data` is sent as a JSON body.
+ *
+ * **Authentication** – Pass `_usetoken = true` (default) to include the Bearer
+ * token automatically. Set it to `false` only for unauthenticated endpoints
+ * such as `/auth/accesstokenrequest`.
+ *
+ * **Common POST endpoints**:
+ * - `/auth/accesstokenrequest` – Obtain an access token (`_usetoken = false`)
+ * - `/order/placeOrder` – Place a new order
+ * - `/contract/getproductfeeparams` – Query product fee parameters
+ * - `/contract/rollcontract` / `/contract/rollcontracts` – Roll a contract
+ *
+ * **Request body shape** varies by endpoint; refer to the `trading` spec for
+ * the required and optional fields for each operation.
+ *
+ * **Error payload** – On failure the API returns:
+ * ```json
+ * { "errorText": "human-readable message" }
  * ```
- * 
- * @param {string} endpoint 
- * @param {{[k:string]: any}} data 
- * @param {boolean} _usetoken 
- * @param {'live' | 'demo'} env 
- * @returns 
+ *
+ * **Rate limits** – Avoid sending more than one request per second on the same
+ * endpoint to prevent `429 Too Many Requests` responses. Implement exponential
+ * back-off on retries.
+ *
+ * ```js
+ * // Place a market buy order
+ * const order = await tvPost('/order/placeOrder', {
+ *   accountSpec: myAcct.name,
+ *   accountId:   myAcct.id,
+ *   action:      'Buy',
+ *   symbol:      'MNQM1',
+ *   orderQty:    2,
+ *   orderType:   'Market',
+ *   isAutomated: true
+ * })
+ *
+ * // Authenticate (no token required)
+ * const token = await tvPost('/auth/accesstokenrequest', credentials, false)
+ * ```
+ *
+ * @param {string} endpoint - API path, e.g. `'/order/placeOrder'`
+ * @param {{[k:string]: any}} data - Request body; serialized to JSON
+ * @param {boolean} _usetoken - Include Bearer token header (default: `true`)
+ * @param {'live' | 'demo'} env - Target environment (default: `'demo'`)
+ * @returns {Promise<any>} Parsed JSON response body
  */
 export const tvPost = async (endpoint, data, _usetoken = true, env = 'demo') => {
     const { token } = getAccessToken()
