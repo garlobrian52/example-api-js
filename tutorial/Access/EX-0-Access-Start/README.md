@@ -106,4 +106,136 @@ connect()
 
 When we run that code, we'll get an error. We should see `GET 400`, an error that basically means we've not made our request correctly and the server couldn't give us anything back. This actually makes perfect sense, because each endpoint has unique expectations - none of which we've accounted for. Remember our `credentials` object? We will need to provide it in our request body to make this code work, which we will explore in the next section.
 
+---
+
+## API Endpoint Reference
+
+This project communicates with the Tradovate REST API. The full trading endpoint specification is available in the [`trading`](./trading) file. Below is a concise reference organized by category.
+
+### Authentication
+
+All endpoints (except `/auth/accesstokenrequest`) require a Bearer token in the `Authorization` header:
+
+```
+Authorization: Bearer <access_token>
+```
+
+Obtain a token by POSTing your credentials to `/auth/accesstokenrequest`:
+
+```js
+// _usetoken must be false — no token exists yet
+const response = await tvPost('/auth/accesstokenrequest', credentials, false)
+const { accessToken, expirationTime } = response
+```
+
+Once obtained, the helpers `tvGet` and `tvPost` in `services.js` attach the token automatically.
+
+---
+
+### Status Codes
+
+| Code | Meaning |
+|------|---------|
+| `200` | Success — body contains the JSON payload |
+| `400` | Bad request — missing or malformed parameters |
+| `401` | Unauthorized — token is missing or has expired; re-authenticate |
+| `404` | Entity not found |
+| `429` | Too many requests — slow down and retry with back-off |
+
+Error responses have the shape:
+
+```json
+{ "errorText": "human-readable error description" }
+```
+
+---
+
+### Contract Library Endpoints
+
+These endpoints provide read-only access to contracts, products, exchanges, and related reference data. All require authentication.
+
+| Endpoint | Method | Description | Required param |
+|----------|--------|-------------|----------------|
+| `/contract/find` | GET | Find a contract by name | `name` (string) |
+| `/contract/item` | GET | Get a single contract by id | `id` (integer) |
+| `/contract/items` | GET | Get multiple contracts by ids | `ids` (comma-separated integers) |
+| `/contract/ldeps` | GET | Get contracts for multiple maturities | `masterids` (comma-separated integers) |
+| `/contract/suggest` | GET | Auto-complete contract name search | `t` (string), `l` (integer, max results) |
+| `/contract/rollcontract` | POST | Roll a single contract | see `trading` spec |
+| `/contract/rollcontracts` | POST | Roll multiple contracts | see `trading` spec |
+| `/contract/getproductfeeparams` | POST | Query fee parameters for a product | see `trading` spec |
+| `/contractGroup/list` | GET | List all contract groups | — |
+| `/contractGroup/find` | GET | Find a contract group by name | `name` (string) |
+| `/contractGroup/item` | GET | Get a contract group by id | `id` (integer) |
+| `/contractMaturity/item` | GET | Get a contract maturity by id | `id` (integer) |
+| `/contractMaturity/deps` | GET | Get maturities for a contract | `masterid` (integer) |
+| `/currency/list` | GET | List all currencies | — |
+| `/currency/item` | GET | Get a currency by id | `id` (integer) |
+| `/exchange/list` | GET | List all exchanges | — |
+| `/exchange/item` | GET | Get an exchange by id | `id` (integer) |
+| `/product/list` | GET | List all products | — |
+| `/product/item` | GET | Get a product by id | `id` (integer) |
+| `/product/find` | GET | Find a product by name | `name` (string) |
+
+```js
+// Example: look up a contract by name
+const contract = await tvGet('/contract/find', { name: 'MNQM3' })
+
+// Example: get a product by id
+const product = await tvGet('/product/item', { id: 42 })
+```
+
+---
+
+### Order Endpoints
+
+These endpoints expose order commands and command reports. All require authentication.
+
+| Endpoint | Method | Description | Required param |
+|----------|--------|-------------|----------------|
+| `/command/list` | GET | List all commands | — |
+| `/command/item` | GET | Get a single command by id | `id` (integer) |
+| `/command/items` | GET | Get multiple commands by ids | `ids` (comma-separated integers) |
+| `/command/deps` | GET | Get commands for an order | `masterid` (integer) |
+| `/command/ldeps` | GET | Get commands for multiple orders | `masterids` (comma-separated integers) |
+| `/commandReport/deps` | GET | Get reports for a command | `masterid` (integer) |
+| `/order/placeOrder` | POST | Place a new order | see `trading` spec |
+
+```js
+// Example: place a market buy order
+const order = await tvPost('/order/placeOrder', {
+    accountSpec: myAcct.name,
+    accountId:   myAcct.id,
+    action:      'Buy',       // 'Buy' | 'Sell'
+    symbol:      'MNQM3',
+    orderQty:    1,
+    orderType:   'Market',    // 'Market' | 'Limit' | 'Stop' | 'StopLimit' | ...
+    isAutomated: false
+})
+```
+
+---
+
+### Pagination
+
+List endpoints (e.g. `/contract/list`, `/product/list`) return all matching entities in a single array — there is no cursor-based pagination. Use `id`/`ids` or `masterid`/`masterids` parameters to narrow results and avoid fetching more data than necessary.
+
+---
+
+### Rate Limits
+
+Avoid sending bursts of requests to the same endpoint. As a guideline, do not exceed one request per second per endpoint. If you receive a `429` response, wait and retry using exponential back-off:
+
+```js
+async function fetchWithRetry(endpoint, query, retries = 3, delay = 1000) {
+    for (let i = 0; i < retries; i++) {
+        const result = await tvGet(endpoint, query)
+        if (result && !result.errorText) return result
+        await new Promise(r => setTimeout(r, delay * Math.pow(2, i)))
+    }
+}
+```
+
+---
+
 ### [Next Section >](http://github.com/tradovate/example-api-js/tree/main/tutorial/Access/EX-1-Simple-Request)
